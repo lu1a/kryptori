@@ -31,7 +31,7 @@ I guess I'll chuck a donation link on the site somewhere..
 ## The requirements/constraints of this codebase
 
 - no accounts, no logging of user data, full stop.
-- must encourage users' self-suffiency and liberty. No hosted Bitcoin wallets, but good instructions on how to make one's own.
+- must encourage users' self-sufficiency and liberty. No hosted Bitcoin wallets, but good instructions on how to make one's own.
 - users must be able to come back and edit/reply to advertisements they make.
 - users who answer advertisements must be able to return after they initially register as interested.
 - web server: full functionality with HTML only, but enhanced functionality with JS enabled.
