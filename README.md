@@ -1,3 +1,5 @@
+## WIP! Make some PRs if you want this to happen faster!
+
 # kryptori
 
 tori.fi, ebay, etc., but for exchanging cryptocurrencies and fiat P2P.
