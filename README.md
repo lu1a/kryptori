@@ -36,3 +36,6 @@ I guess I'll chuck a donation link on the site somewhere..
 - users who answer advertisements must be able to return after they initially register as interested.
 - web server: full functionality with HTML only, but enhanced functionality with JS enabled.
 
+## Run the application
+
+`cc main.c deps/mongoose.c deps/sqlite3.h`
