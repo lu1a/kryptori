@@ -39,3 +39,36 @@ I guess I'll chuck a donation link on the site somewhere..
 ## Run the application
 
 `cc main.c deps/mongoose.c deps/sqlite3.h`
+
+## Models
+
+Advertisement:
+- id
+- created_at
+- updated_at
+- title
+- description
+- is_standing_order <i>(determining whether the ad be deleted when the exchange is marked as over.)</i>
+- (fk) owner_token
+- (fk) chats
+
+User:
+- token
+- last_interacted_at
+- (fk) chats
+
+Chat:
+- id
+- advertisement_id
+- (fk) owner_token
+- (fk) seeker_token
+- (fk) messages
+
+Message:
+- id
+- sent_at
+- read_at
+- text
+- (fk) sender_token
+- (fk) chat_id
+
