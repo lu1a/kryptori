@@ -44,42 +44,43 @@ I guess I'll chuck a donation link on the site somewhere..
 
 ### Advertisement
 
-| Field             | Description                                                                                 |
-|-------------------|---------------------------------------------------------------------------------------------|
-| **id**            |                                                                                             |
-| **created_at**    |                                                                                             |
-| **updated_at**    |                                                                                             |
-| **title**         |                                                                                             |
-| **description**   |                                                                                             |
-| **is_standing_order** | Determines whether the ad should be deleted when the exchange is marked as over.         |
-| **owner_token**   | *(foreign key)*                                                                             |
-| **chats**         | *(foreign key)*                                                                             |
+| Field                 | Description                                                                      |
+|-----------------------|----------------------------------------------------------------------------------|
+| **id**                |                                                                                  |
+| **created_at**        |                                                                                  |
+| **updated_at**        |                                                                                  |
+| **title**             |                                                                                  |
+| **description**       |                                                                                  |
+| **is_standing_order** | Determines whether the ad should be deleted when the exchange is marked as over. |
+| **owner_token**       | *(foreign key)*                                                                  |
+| **chats**             | *(foreign key)*                                                                  |
 
 ### User
 
-| Field                | Description                                                                             |
-|----------------------|-----------------------------------------------------------------------------------------|
-| **token**            |                                                                                         |
-| **last_interacted_at**|                                                                                         |
-| **chats**            | *(foreign key)*                                                                         |
+| Field                  | Description     |
+|------------------------|-----------------|
+| **token**              |                 |
+| **last_interacted_at** |                 |
+| **chats**              | *(foreign key)* |
 
 ### Chat
 
-| Field                | Description                                                                             |
-|----------------------|-----------------------------------------------------------------------------------------|
-| **id**               |                                                                                         |
-| **advertisement_id**  |                                                                                         |
-| **owner_token**       | *(foreign key)*                                                                         |
-| **seeker_token**      | *(foreign key)*                                                                         |
-| **messages**          | *(foreign key)*                                                                         |
+| Field                | Description     |
+|----------------------|-----------------|
+| **id**               |                 |
+| **advertisement_id** | *(foreign key)* |
+| **owner_token**      | *(foreign key)* |
+| **seeker_token**     | *(foreign key)* |
+| **messages**         | *(foreign key)* |
 
 ### Message
 
-| Field                | Description                                                                             |
-|----------------------|-----------------------------------------------------------------------------------------|
-| **id**               |                                                                                         |
-| **sent_at**          |                                                                                         |
-| **read_at**          |                                                                                         |
-| **text**             |                                                                                         |
-| **sender_token**     | *(foreign key)*                                                                         |
-| **chat_id**          | *(foreign key)*                                                                         |
+| Field                | Description     |
+|----------------------|-----------------|
+| **id**               |                 |
+| **sent_at**          |                 |
+| **read_at**          |                 |
+| **text**             |                 |
+| **sender_token**     | *(foreign key)* |
+| **chat_id**          | *(foreign key)* |
+
