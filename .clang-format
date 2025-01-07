@@ -1,0 +1,9 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Attach
+AllowShortBlocksOnASingleLine: false
+IndentCaseLabels: false
+ColumnLimit: 120
+
