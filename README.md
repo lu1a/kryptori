@@ -6,9 +6,8 @@ tori.fi, ebay, etc., but for exchanging cryptocurrencies and fiat P2P.
 
 LocalMonero is down, LocalBitcoins is down, somebody needs to pick up the slack.
 
-This codebase aims to create a NOT FOR PROFIT platform for users to buy crypto from random people online,
-through advertisements of exchange. This platform will not initially be an escrow service,
-only advertisement.
+This codebase aims to create a NOT FOR PROFIT platform for users to exchange crypto with random people online 
+through public advertisements. This platform will not initially be an escrow service.
 
 For example, say I want to get more Monero. It's annoying to go through a third-party
 cryptocurrency to go from fiat currency -> Bitcoin (for ex.) -> Monero, all the while losing
