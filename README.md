@@ -37,7 +37,7 @@ I guess I'll chuck a donation link on the site somewhere..
 
 ## Run the application
 
-`cc main.c deps/mongoose.c deps/sqlite3.h`
+`make run`
 
 ## Models
 
