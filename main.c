@@ -1,5 +1,5 @@
-#include "deps/mongoose.h"
-#include "deps/sqlite3.h"
+#include "deps/mongoose.c"
+#include "deps/sqlite3.c"
 
 static void ev_handler(struct mg_connection *c, int ev, void *ev_data) {
     if (ev == MG_EV_HTTP_MSG) {

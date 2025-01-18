@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -o kryptori
-SOURCES = main.c deps/sqlite3.c deps/mongoose.c
+SOURCES = main.c
 TARGET = kryptori 
 
 all: $(TARGET)

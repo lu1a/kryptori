@@ -35,6 +35,10 @@ I guess I'll chuck a donation link on the site somewhere..
 - users who answer advertisements must be able to return after they initially register as interested.
 - web server: full functionality with HTML only, but enhanced functionality with JS enabled.
 
+## Programming style
+
+- Unity build, no include hell thank you.
+
 ## Run the application
 
 `make run`
