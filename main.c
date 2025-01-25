@@ -20,7 +20,7 @@ int create_tables_if_not_exist(sqlite3 **db) {
     char *err_msg = NULL;
     const char *create_advertisement_table_sql = "CREATE TABLE IF NOT EXISTS Advertisement ("
                                                  "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                 "created_at TEXT NOT NULL,"
+                                                 "created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                                                  "updated_at TEXT,"
                                                  "title TEXT NOT NULL,"
                                                  "description TEXT NOT NULL,"
@@ -43,7 +43,7 @@ int create_tables_if_not_exist(sqlite3 **db) {
 }
 
 char *fetch_advertisements_html(sqlite3 *db) {
-    const char *sql = "SELECT title, description FROM Advertisement;";
+    const char *sql = "SELECT title, description FROM Advertisement ORDER BY created_at DESC;";
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     
