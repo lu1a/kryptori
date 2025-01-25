@@ -2,6 +2,26 @@
     <head>
         <title>Kryptori</title>
         <style>
+            details {
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                padding: 0.5em 0.5em 0;
+            }
+
+            summary {
+                font-weight: bold;
+                margin: -0.5em -0.5em 0;
+                padding: 0.5em;
+            }
+
+            details[open] {
+                padding: 0.5em;
+            }
+
+            details[open] summary {
+                border-bottom: 1px solid #aaa;
+                margin-bottom: 0.5em;
+            }
             @media (prefers-color-scheme: dark) {
                 body {
                     background-color: #33334d;
@@ -14,21 +34,23 @@
         </style>
     </head>
     <body>
-        <p>Hello world!!!</p>
+        <details>
+            <summary><h2>Create a new advertisement</h2></summary>
+            <form action="/create-ad" method="post">
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title" required><br>
+
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description" required></textarea><br>
+
+                <label for="owner_email">Owner Email:</label><br>
+                <input type="email" id="owner_email" name="owner_email" required><br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </details>
+        <h2>Advertisements</h2>
         {{ ads }}
-        <h2>Create a new advertisement</h2>
-        <form action="/create-ad" method="post">
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title" required><br>
-
-            <label for="description">Description:</label><br>
-            <textarea id="description" name="description" required></textarea><br>
-
-            <label for="owner_email">Owner Email:</label><br>
-            <input type="email" id="owner_email" name="owner_email" required><br>
-
-            <button type="submit">Submit</button>
-        </form>
     </body>
 </html>
 

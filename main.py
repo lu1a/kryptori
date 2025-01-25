@@ -87,18 +87,29 @@ def fetch_advertisements_html():
 
     html = "<ul>"
     for id, title, description in ads:
-        html += f"""<li>{title} - {description}
+        html += f"""<li>
+        <details>
+        <summary>{title} - {description}</summary>
+        <p><b>{title}</b>
+        <br />
+        {description}
+        <br />
+        Send a reply to the poster!
+        </p>
         <form action="/send-message" method="post">
-            <input type="hidden" id="ad_id" name="ad_id" value="{id}" required><br><br>
+            <input type="hidden" id="ad_id" name="ad_id" value="{id}" required>
 
             <label for="user_email">Your Email:</label><br>
-            <input type="email" id="user_email" name="user_email" required><br><br>
+            <input type="email" id="user_email" name="user_email" required>
+            <br />
 
             <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" required></textarea><br><br>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            <br />
 
             <button type="submit">Send Message</button>
         </form>
+        </details>
         </li>"""
     html += "</ul>"
     return html
