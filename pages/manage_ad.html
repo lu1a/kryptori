@@ -14,7 +14,24 @@
         </style>
     </head>
     <body>
-        <p>Here's where you manage your ad.</p>
+        <form action="/update-ad" method="post">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" value="{{ title }}" required><br><br>
+
+            <li>Created at: {{ created_at }}</li>
+            <li>Updated at: {{ updated_at }}</li>
+            <li>Your email: {{ owner_email }}</li>
+            <br />
+
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" rows="4" required>{{ description }}</textarea>
+            <br />
+            <br />
+
+            <input type="hidden" id="token" name="token" value="{{ token }}" required />
+
+            <button type="submit">Update Advertisement</button>
+        </form>
     </body>
 </html>
 

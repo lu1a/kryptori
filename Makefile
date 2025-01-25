@@ -1,18 +1,35 @@
-CC = cc
-CFLAGS = -o kryptori
-SOURCES = main.c
-TARGET = kryptori 
+VENV_DIR = venv
 
-all: $(TARGET)
+.PHONY: default
+default: run
 
-$(TARGET): $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS)
+.PHONY: install
+install:
+	nix develop
 
-run: $(TARGET)
-	./$(TARGET)
+run:
+	@echo "Starting FastAPI server..."
+	$(VENV_DIR)/bin/uvicorn main:app --reload
 
+.PHONY: format
+format:
+	ruff check --fix .
+	ruff format .
+
+# Lint the Python code using ruff
+.PHONY: lint
+lint:
+	ruff check .
+
+.PHONY: test
+test:
+	pytest
+
+# Clean up virtual environment and cache
+.PHONY: clean
 clean:
-	rm -f $(TARGET)
-
-.PHONY: all clean
+	@echo "Cleaning up..."
+	rm -rf $(VENV_DIR)
+	rm -rf __pycache__
+	rm -rf .pytest_cache
 

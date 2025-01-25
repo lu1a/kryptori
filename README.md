@@ -42,13 +42,9 @@ Here's how I imagine the process to go:
 4. The poster gets in touch with the interested party and sorts everything out with them via email between themselves.
 5. Transaction occurs or doesn't, between themselves. The poster takes down or edits the ad via their token they got sent to their email originally.
 
-## Programming style
-
-- Unity build, no include hell thank you.
-
 ## Run the application
 
-`make run`
+`nix develop` then `make run` or `uvicorn main:app --reload`
 
 ## Models
 
