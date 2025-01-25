@@ -46,41 +46,43 @@ char *fetch_advertisements_html(sqlite3 *db) {
     const char *sql = "SELECT title, description FROM Advertisement ORDER BY created_at DESC;";
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-    
+
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
         return strdup("<ul></ul>");
     }
-    
+
     size_t buffer_size = 1024;
     char *html = malloc(buffer_size);
-    if (!html) return NULL;
+    if (!html)
+        return NULL;
     strcpy(html, "<ul>");
-    
+
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         const char *title = (const char *)sqlite3_column_text(stmt, 0);
         const char *description = (const char *)sqlite3_column_text(stmt, 1);
-        
+
         size_t new_size = buffer_size + strlen(title) + strlen(description) + 50;
         html = realloc(html, new_size);
-        if (!html) return NULL;
-        
+        if (!html)
+            return NULL;
+
         strcat(html, "<li>");
         strcat(html, title);
         strcat(html, " - ");
         strcat(html, description);
         strcat(html, "</li>");
-        
+
         buffer_size = new_size;
     }
-    
+
     strcat(html, "</ul>");
     sqlite3_finalize(stmt);
     return html;
 }
 
 static void ev_handler(struct mg_connection *c, int ev, void *ev_data) {
-    struct HandlerData* handler_data = (struct HandlerData*)c->fn_data;
+    struct HandlerData *handler_data = (struct HandlerData *)c->fn_data;
     if (ev == MG_EV_HTTP_MSG) {
         struct mg_http_message *hm = (struct mg_http_message *)ev_data;
         if (mg_match(hm->uri, mg_str("/"), NULL)) {
@@ -88,7 +90,7 @@ static void ev_handler(struct mg_connection *c, int ev, void *ev_data) {
             char *index_page = (char *)malloc(sizeof(handler_data->pages->index_page));
             strcpy(index_page, handler_data->pages->index_page);
             char *ads_html = fetch_advertisements_html(handler_data->db);
-            
+
             char *pos = strstr(index_page, "{{ ads }}");
             if (pos) {
                 size_t new_size = strlen(index_page) - strlen("{{ ads }}") + strlen(ads_html) + 1;
@@ -102,7 +104,7 @@ static void ev_handler(struct mg_connection *c, int ev, void *ev_data) {
                     index_page = new_page;
                 }
             }
-            
+
             mg_http_reply(c, 200, "", "%s\n", index_page, time(NULL));
             free(index_page);
             free(ads_html);
@@ -137,9 +139,9 @@ int main(void) {
     int manage_ad_page_fd = open("pages/manage_ad.html", O_RDONLY);
     int manage_ad_page_len = lseek(manage_ad_page_fd, 0, SEEK_END);
     void *manage_ad_page = mmap(0, manage_ad_page_len, PROT_READ, MAP_PRIVATE, manage_ad_page_fd, 0);
-    struct Pages pages = { .index_page = (char*)index_page, .manage_ad_page = (char*)manage_ad_page };
+    struct Pages pages = {.index_page = (char *)index_page, .manage_ad_page = (char *)manage_ad_page};
 
-    struct HandlerData handler_data = { .db = db, .pages = &pages };
+    struct HandlerData handler_data = {.db = db, .pages = &pages};
     struct mg_mgr mgr;
     mg_mgr_init(&mgr);
     mg_http_listen(&mgr, "http://0.0.0.0:8000", ev_handler, &handler_data);
