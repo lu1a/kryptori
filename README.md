@@ -50,14 +50,14 @@ Here's how I imagine the process to go:
 
 ### Advertisement
 
-| Field                 | Description                                                                      |
-|-----------------------|----------------------------------------------------------------------------------|
-| **id**                |                                                                                  |
-| **created_at**        |                                                                                  |
-| **updated_at**        |                                                                                  |
-| **title**             |                                                                                  |
-| **description**       |                                                                                  |
-| **is_standing_order** | Determines whether the ad should be deleted when the exchange is marked as over. |
-| **owner_email**       | To send to only, never to show on the site.                                      |
-| **owner_token**       | So that there's a way for the OP to manage the ad after posting.                 |
+| Field                 | Description                                                                                                                            |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| **id**                |                                                                                                                                        |
+| **created_at**        |                                                                                                                                        |
+| **updated_at**        |                                                                                                                                        |
+| **title**             |                                                                                                                                        |
+| **description**       |                                                                                                                                        |
+| **active**            | Whether the ad has been activated yet by user, proving they're alive by navigating to their ad management page via unique token param. |
+| **owner_email**       | To send to only, never to show on the site.                                                                                            |
+| **owner_token**       | So that there's a way for the OP to manage the ad after posting.                                                                       |
 
