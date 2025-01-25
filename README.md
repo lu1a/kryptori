@@ -31,9 +31,16 @@ I guess I'll chuck a donation link on the site somewhere..
 
 - no accounts, no logging of user data, full stop.
 - must encourage users' self-sufficiency and liberty. No hosted Bitcoin wallets, but good instructions on how to make one's own.
-- users must be able to come back and edit/reply to advertisements they make.
-- users who answer advertisements must be able to return after they initially register as interested.
-- web server: full functionality with HTML only, but enhanced functionality with JS enabled.
+- users who post an ad must be able to come back and manage the advertisements they make.
+- web server: full functionality with HTML only. (With enhanced functionality with JS enabled?)
+
+Here's how I imagine the process to go:
+
+1. A user posts an ad, and recieves a token via email where they can manage said ad.
+2. An interested party clicks that they're interested, and is prompted to give a reply and their email address to the ad poster.
+3. This site sends that interested party reply+caller email to the ad poster user via the poster's email.
+4. The poster gets in touch with the interested party and sorts everything out with them via email between themselves.
+5. Transaction occurs or doesn't, between themselves. The poster takes down or edits the ad via their token they got sent to their email originally.
 
 ## Programming style
 
@@ -55,35 +62,6 @@ I guess I'll chuck a donation link on the site somewhere..
 | **title**             |                                                                                  |
 | **description**       |                                                                                  |
 | **is_standing_order** | Determines whether the ad should be deleted when the exchange is marked as over. |
-| **owner_token**       | *(foreign key)*                                                                  |
-| **chats**             | *(foreign key)*                                                                  |
-
-### User
-
-| Field                  | Description     |
-|------------------------|-----------------|
-| **token**              |                 |
-| **last_interacted_at** |                 |
-| **chats**              | *(foreign key)* |
-
-### Chat
-
-| Field                | Description     |
-|----------------------|-----------------|
-| **id**               |                 |
-| **advertisement_id** | *(foreign key)* |
-| **owner_token**      | *(foreign key)* |
-| **seeker_token**     | *(foreign key)* |
-| **messages**         | *(foreign key)* |
-
-### Message
-
-| Field                | Description     |
-|----------------------|-----------------|
-| **id**               |                 |
-| **sent_at**          |                 |
-| **read_at**          |                 |
-| **text**             |                 |
-| **sender_token**     | *(foreign key)* |
-| **chat_id**          | *(foreign key)* |
+| **owner_email**       | To send to only, never to show on the site.                                      |
+| **owner_token**       | So that there's a way for the OP to manage the ad after posting.                 |
 

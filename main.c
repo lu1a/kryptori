@@ -21,58 +21,11 @@ int create_tables_if_not_exist(sqlite3 **db) {
                                                  "title TEXT NOT NULL,"
                                                  "description TEXT,"
                                                  "is_standing_order INTEGER NOT NULL,"
-                                                 "owner_token TEXT NOT NULL,"
-                                                 "FOREIGN KEY(owner_token) REFERENCES User(token)"
+                                                 "owner_email TEXT NOT NULL,"
+                                                 "owner_token TEXT NOT NULL"
                                                  ");";
 
-    const char *create_user_table_sql = "CREATE TABLE IF NOT EXISTS User ("
-                                        "token TEXT PRIMARY KEY,"
-                                        "last_interacted_at TEXT"
-                                        ");";
-
-    const char *create_chat_table_sql = "CREATE TABLE IF NOT EXISTS Chat ("
-                                        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                        "advertisement_id INTEGER,"
-                                        "owner_token TEXT,"
-                                        "seeker_token TEXT,"
-                                        "FOREIGN KEY(advertisement_id) REFERENCES Advertisement(id),"
-                                        "FOREIGN KEY(owner_token) REFERENCES User(token),"
-                                        "FOREIGN KEY(seeker_token) REFERENCES User(token)"
-                                        ");";
-
-    const char *create_message_table_sql = "CREATE TABLE IF NOT EXISTS Message ("
-                                           "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                           "sent_at TEXT NOT NULL,"
-                                           "read_at TEXT,"
-                                           "text TEXT NOT NULL,"
-                                           "sender_token TEXT NOT NULL,"
-                                           "chat_id INTEGER,"
-                                           "FOREIGN KEY(sender_token) REFERENCES User(token),"
-                                           "FOREIGN KEY(chat_id) REFERENCES Chat(id)"
-                                           ");";
-
-    const char *create_advertisement_chats_table_sql = "CREATE TABLE IF NOT EXISTS AdvertisementChats ("
-                                                       "advertisement_id INTEGER,"
-                                                       "chat_id INTEGER,"
-                                                       "FOREIGN KEY(advertisement_id) REFERENCES Advertisement(id),"
-                                                       "FOREIGN KEY(chat_id) REFERENCES Chat(id),"
-                                                       "PRIMARY KEY(advertisement_id, chat_id)"
-                                                       ");";
-
-    const char *create_user_chats_table_sql = "CREATE TABLE IF NOT EXISTS UserChats ("
-                                              "user_token TEXT,"
-                                              "chat_id INTEGER,"
-                                              "FOREIGN KEY(user_token) REFERENCES User(token),"
-                                              "FOREIGN KEY(chat_id) REFERENCES Chat(id),"
-                                              "PRIMARY KEY(user_token, chat_id)"
-                                              ");";
-
-    const char *sql[] = {create_advertisement_table_sql,
-                         create_user_table_sql,
-                         create_chat_table_sql,
-                         create_message_table_sql,
-                         create_advertisement_chats_table_sql,
-                         create_user_chats_table_sql};
+    const char *sql[] = {create_advertisement_table_sql};
 
     for (int i = 0; i < (sizeof(sql) / sizeof(sql[0])); i++) {
         if (sqlite3_exec(*db, sql[i], 0, 0, &err_msg) != SQLITE_OK) {
@@ -90,7 +43,6 @@ int main(void) {
     int rc;
 
     rc = sqlite3_open("kryptori.db", &db);
-
     if (rc) {
         MG_ERROR(("Can't open database: %s", sqlite3_errmsg(db)));
         return 1;
@@ -98,7 +50,12 @@ int main(void) {
         MG_INFO(("Opened database successfully"));
     }
 
-    create_tables_if_not_exist(&db);
+    int created_tables_err = create_tables_if_not_exist(&db);
+    if (created_tables_err) {
+        return 1;
+    } else {
+        MG_INFO(("Created db tables if they didn't exist"));
+    }
 
     struct mg_mgr mgr;
     mg_mgr_init(&mgr);
