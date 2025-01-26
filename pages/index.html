@@ -22,6 +22,12 @@
                 border-bottom: 1px solid #aaa;
                 margin-bottom: 0.5em;
             }
+            .ad-container {
+                margin-top: 8px;
+            }
+            .input-container {
+                margin-top: 24px;
+            }
             @media (prefers-color-scheme: dark) {
                 body {
                     background-color: #33334d;
@@ -35,18 +41,53 @@
     </head>
     <body>
         <details>
-            <summary><h2>Create a new advertisement</h2></summary>
+            <summary style="display: flex; align-items: center;"><h2>Create a new advertisement</h2></summary>
             <form action="/create-ad" method="post">
-                <label for="title">Title:</label><br>
-                <input type="text" id="title" name="title" required><br>
+                <div class="input-container">
+                    <label for="owner_email">
+                        <b>Your email</b>
+                        <br />
+                        This is only stored in order to send user replies to later.
+                        <br />
+                        When the ad is deleted, so is the email address. You can see in the <a target="_blank" href="https://github.com/lu1a/kryptori">source code</a>
+                        <br />
+                        that the email isn't used anywhere else. I'm completely open to ideas
+                        <br />
+                        on how better to prove that the email address isn't saved or used anywhere else.
+                    </label>
+                    <br />
+                    <input type="email" id="owner_email" name="owner_email" required>
+                </div>
 
-                <label for="description">Description:</label><br>
-                <textarea id="description" name="description" required></textarea><br>
+                <div class="input-container">
+                    <label for="title">
+                        <b>Title</b>
+                        <br />
+                        Be succinct.
+                        <br />
+                        I recommend the format <i>Have: {amount} {currency}. Want: {amount} {currency}.</i>
+                        <br />
+                        Eg. <i>Have: 5 XMR. Want: 0.011 BTC</i>
+                        <br />
+                        <i>Have: 5 XMR. Want: a mini PC worth 5 XMR. Mail to Stockholm, Sweden.</i>
+                    </label>
+                    <br />
+                    <input type="text" id="title" name="title" style="width: 48%;" required>
+                </div>
 
-                <label for="owner_email">Owner Email:</label><br>
-                <input type="email" id="owner_email" name="owner_email" required><br>
+                <div class="input-container">
+                    <label for="description">
+                        <b>Description</b>
+                        <br />
+                        Here's where you actually describe details, caveats, etc.
+                    </label>
+                    <br />
+                    <textarea id="description" name="description" style="width: 100%; height: 6rem;" required></textarea>
+                </div>
 
-                <button type="submit">Submit</button>
+                <div class="input-container">
+                    <button type="submit">Create ad</button>
+                </div>
             </form>
         </details>
         <h2>Advertisements</h2>

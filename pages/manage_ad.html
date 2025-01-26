@@ -11,27 +11,50 @@
                     color: white;
                 }
             }
+            .input-container {
+                margin-top: 24px;
+            }
         </style>
     </head>
     <body>
+        <h2>Manage your ad</h2>
         <form action="/update-ad" method="post">
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title" value="{{ title }}" required><br><br>
+            <div class="input-container">
+                <label for="title"><b>Title</b></label>
+                <br />
+                <input type="text" id="title" name="title" value="{{ title }}" style="width: 48%;" required><br><br>
+            </div>
 
-            <li>Created at: {{ created_at }}</li>
-            <li>Updated at: {{ updated_at }}</li>
-            <li>Your email: {{ owner_email }}</li>
-            <br />
+            <i>Created on {{ created_at }}, updated on {{ updated_at }}</i>
+            <p>User replies will be sent to <i>{{ owner_email }}</i></p>
 
-            <label for="description">Description:</label><br>
-            <textarea id="description" name="description" rows="4" required>{{ description }}</textarea>
-            <br />
-            <br />
+            <div class="input-container">
+                <label for="description"><b>Description</b></label>
+                <br />
+                <textarea id="description" name="description" style="width: 100%; height: 12rem;" required>{{ description }}</textarea>
+            </div>
 
             <input type="hidden" id="token" name="token" value="{{ token }}" required />
 
-            <button type="submit">Update Advertisement</button>
+            <div class="input-container">
+                <button type="submit">Update ad</button>
+            </div>
         </form>
+        <details>
+            <summary>Delete ad</summary>
+            <form action="/delete-ad" method="post">
+                <input type="hidden" id="token" name="token" value="{{ token }}" required />
+                <div class="input-container">
+                    <label for="delete">
+                        Warning: since this page is HTML-only, there's no dialog or modal to confirm.
+                        <br />
+                        If you hit this button the ad will be deleted right away.
+                    </label>
+                    <br />
+                    <button type="submit" name="delete">Delete ad</button>
+                </div>
+            </form>
+        </details>
     </body>
 </html>
 
