@@ -17,6 +17,7 @@
         </style>
     </head>
     <body>
+        <h1>Kryptori</h1>
         <h2>Manage your ad</h2>
         <form action="/update-ad" method="post">
             <div class="input-container">
@@ -41,7 +42,7 @@
             </div>
         </form>
         <details>
-            <summary>Delete ad</summary>
+            <summary style="cursor: pointer;">Delete ad</summary>
             <form action="/delete-ad" method="post">
                 <input type="hidden" id="token" name="token" value="{{ token }}" required />
                 <div class="input-container">

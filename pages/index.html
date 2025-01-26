@@ -2,23 +2,24 @@
     <head>
         <title>Kryptori</title>
         <style>
-            details {
+            .main-content details {
                 border: 1px solid #aaa;
                 border-radius: 4px;
                 padding: 0.5em 0.5em 0;
             }
 
-            summary {
+            .main-content summary {
                 font-weight: bold;
                 margin: -0.5em -0.5em 0;
                 padding: 0.5em;
+                cursor: pointer;
             }
 
-            details[open] {
+            .main-content details[open] {
                 padding: 0.5em;
             }
 
-            details[open] summary {
+            .main-content details[open] summary {
                 border-bottom: 1px solid #aaa;
                 margin-bottom: 0.5em;
             }
@@ -40,58 +41,80 @@
         </style>
     </head>
     <body>
-        <details>
-            <summary style="display: flex; align-items: center;"><h2>Create a new advertisement</h2></summary>
-            <form action="/create-ad" method="post">
-                <div class="input-container">
-                    <label for="owner_email">
-                        <b>Your email</b>
+        <div class="site-info">
+            <h1>Kryptori</h1>
+            <details>
+                <summary style="cursor: pointer;">About</summary>
+                <p>
+                Like Ebay but for crypto etc.
+                <br />
+                Not an escrow service, just getting two parties in touch
+                so that they can exchange virtual and physical goods.
+                <br />
+                The idea is that you and the other party conduct your affairs
+                over email, because that encourages your liberty as opposed to trying to
+                keep your data in some proprietary in-app chat.
+                <br />
+                <br />
+                ...what, you don't like the UI?!
+                Make a pull request to the source code then: <a href="https://github.com/lu1a/kryptori">github.com/lu1a/kryptori</a>.
+                </p>
+            </details>
+        </div>
+        <div class="main-content">
+            <details style="margin-top: 24px;">
+                <summary style="display: flex; align-items: center;"><h2>Create a new advertisement</h2></summary>
+                <form action="/create-ad" method="post">
+                    <div class="input-container">
+                        <label for="owner_email">
+                            <b>Your email</b>
+                            <br />
+                            This is only stored in order to send user replies to later.
+                            <br />
+                            When the ad is deleted, so is the email address. You can see in the <a target="_blank" href="https://github.com/lu1a/kryptori">source code</a>
+                            <br />
+                            that the email isn't used anywhere else. I'm completely open to ideas
+                            <br />
+                            on how better to prove that the email address isn't saved or used anywhere else.
+                        </label>
                         <br />
-                        This is only stored in order to send user replies to later.
-                        <br />
-                        When the ad is deleted, so is the email address. You can see in the <a target="_blank" href="https://github.com/lu1a/kryptori">source code</a>
-                        <br />
-                        that the email isn't used anywhere else. I'm completely open to ideas
-                        <br />
-                        on how better to prove that the email address isn't saved or used anywhere else.
-                    </label>
-                    <br />
-                    <input type="email" id="owner_email" name="owner_email" required>
-                </div>
+                        <input type="email" id="owner_email" name="owner_email" placeholder="abc@xyz.com" required>
+                    </div>
 
-                <div class="input-container">
-                    <label for="title">
-                        <b>Title</b>
+                    <div class="input-container">
+                        <label for="title">
+                            <b>Title</b>
+                            <br />
+                            Be succinct.
+                            <br />
+                            I recommend the format <i>Have: {amount} {currency}. Want: {amount} {currency}.</i>
+                            <br />
+                            Eg. <i>Have: 5 XMR. Want: 0.011 BTC</i>
+                            <br />
+                            <i>Have: 5 XMR. Want: a mini PC worth 5 XMR. Mail to Stockholm, Sweden.</i>
+                        </label>
                         <br />
-                        Be succinct.
-                        <br />
-                        I recommend the format <i>Have: {amount} {currency}. Want: {amount} {currency}.</i>
-                        <br />
-                        Eg. <i>Have: 5 XMR. Want: 0.011 BTC</i>
-                        <br />
-                        <i>Have: 5 XMR. Want: a mini PC worth 5 XMR. Mail to Stockholm, Sweden.</i>
-                    </label>
-                    <br />
-                    <input type="text" id="title" name="title" style="width: 48%;" required>
-                </div>
+                        <input type="text" id="title" name="title" style="width: 48%;" required>
+                    </div>
 
-                <div class="input-container">
-                    <label for="description">
-                        <b>Description</b>
+                    <div class="input-container">
+                        <label for="description">
+                            <b>Description</b>
+                            <br />
+                            Here's where you actually describe details, caveats, etc.
+                        </label>
                         <br />
-                        Here's where you actually describe details, caveats, etc.
-                    </label>
-                    <br />
-                    <textarea id="description" name="description" style="width: 100%; height: 6rem;" required></textarea>
-                </div>
+                        <textarea id="description" name="description" style="width: 100%; height: 6rem;" required></textarea>
+                    </div>
 
-                <div class="input-container">
-                    <button type="submit">Create ad</button>
-                </div>
-            </form>
-        </details>
-        <h2>Advertisements</h2>
-        {{ ads }}
+                    <div class="input-container">
+                        <button type="submit">Create ad</button>
+                    </div>
+                </form>
+            </details>
+            <h2>Advertisements</h2>
+            {{ ads }}
+        </div>
     </body>
 </html>
 

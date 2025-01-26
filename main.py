@@ -109,7 +109,7 @@ def fetch_advertisements_html():
                     saved behind the scenes or anything.
                 </label>
                 <br />
-                <input type="email" id="user_email" name="user_email" required>
+                <input type="email" id="user_email" name="user_email" placeholder="abc@xyz.com" required>
             </div>
 
             <div class="input-container">
