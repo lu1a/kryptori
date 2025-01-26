@@ -96,7 +96,7 @@ def fetch_advertisements_html():
             <span>Get in touch with the poster!</span>
             <input type="hidden" id="ad_id" name="ad_id" value="{id}" required>
 
-            <div class="input-container">
+            <div style="margin-top: 4px;">
                 <label for="user_email">
                     <b>Your email</b>
                     <br />
