@@ -55,7 +55,7 @@ def create_advertisement(
     conn.close()
 
     msg = EmailMessage()
-    msg["From"] = "noreply@kryptori.com"
+    msg["From"] = "noreply@kryptori.lu1.sh"
     msg["To"] = owner_email
     msg["Subject"] = f"New ad created: {title}"
     msg.set_content(
@@ -64,7 +64,7 @@ def create_advertisement(
             f"Title: {title}\n"
             f"Description: {description}\n"
             "Before it goes live, you must go activate the ad by loading the\n"
-            "webpage: kryptori.com/manage-ad?token={YOUR_TOKEN_ID}\n\n "
+            "webpage: kryptori.lu1.sh/manage-ad?token={YOUR_TOKEN_ID}\n\n "
             f"The token for this ad is: {owner_token}\n"
             "and that's where you can update and delete it."
         )
@@ -195,7 +195,7 @@ async def send_message(
     s = smtplib.SMTP("localhost")
 
     msg_to_owner = EmailMessage()
-    msg_to_owner["From"] = "noreply@kryptori.com"
+    msg_to_owner["From"] = "noreply@kryptori.lu1.sh"
     msg_to_owner["To"] = owner_email
     msg_to_owner["Reply To"] = user_email
     msg_to_owner["Subject"] = f"New message about your ad: {title}"
@@ -210,7 +210,7 @@ async def send_message(
     s.send_message(msg_to_owner)
 
     confirmation_msg_to_user = EmailMessage()
-    confirmation_msg_to_user["From"] = "noreply@kryptori.com"
+    confirmation_msg_to_user["From"] = "noreply@kryptori.lu1.sh"
     confirmation_msg_to_user["To"] = user_email 
     confirmation_msg_to_user["Subject"] = "Confirmation: you sent a msg about an ad"
     confirmation_msg_to_user.set_content(
