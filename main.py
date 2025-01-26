@@ -71,7 +71,10 @@ def create_advertisement(
     )
 
     # Send the message via our own SMTP server.
-    s = smtplib.SMTP("localhost")
+    s = smtplib.SMTP("localhost", 25)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
     s.send_message(msg)
     s.quit()
 
@@ -192,7 +195,10 @@ async def send_message(
     conn.commit()
     conn.close()
 
-    s = smtplib.SMTP("localhost")
+    s = smtplib.SMTP("localhost", 25)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
 
     msg_to_owner = EmailMessage()
     msg_to_owner["From"] = "noreply@kryptori.lu1.sh"
