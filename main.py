@@ -192,12 +192,14 @@ async def send_message(
     conn.commit()
     conn.close()
 
-    msg = EmailMessage()
-    msg["From"] = "noreply@kryptori.com"
-    msg["To"] = owner_email
-    msg["Reply To"] = user_email
-    msg["Subject"] = f"New message about your ad: {title}"
-    msg.set_content(
+    s = smtplib.SMTP("localhost")
+
+    msg_to_owner = EmailMessage()
+    msg_to_owner["From"] = "noreply@kryptori.com"
+    msg_to_owner["To"] = owner_email
+    msg_to_owner["Reply To"] = user_email
+    msg_to_owner["Subject"] = f"New message about your ad: {title}"
+    msg_to_owner.set_content(
         (
             f"Here's a message from an interested party about your ad {title}!\n"
             f"Message:\n{message}\n"
@@ -205,10 +207,19 @@ async def send_message(
             "Please reply to their email address."
         )
     )
+    s.send_message(msg_to_owner)
 
-    # Send the message via our own SMTP server.
-    s = smtplib.SMTP("localhost")
-    s.send_message(msg)
+    confirmation_msg_to_user = EmailMessage()
+    confirmation_msg_to_user["From"] = "noreply@kryptori.com"
+    confirmation_msg_to_user["To"] = user_email 
+    confirmation_msg_to_user["Subject"] = "Confirmation: you sent a msg about an ad"
+    confirmation_msg_to_user.set_content(
+        f"You just sent a message in reply to this ad: {title}\n"
+        f"Your message was: {message}\n\n"
+        "Now you will wait for the ad poster to reply to you via email.\n"
+        "Thanks for using kryptori!"
+    )
+    s.send_message(confirmation_msg_to_user)
     s.quit()
 
     return RedirectResponse(url="/?success=true", status_code=303)
