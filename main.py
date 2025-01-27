@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from jinja2 import Template
@@ -49,13 +50,13 @@ def create_advertisement(
 
     cursor.execute(
         insert_sql,
-        (title, description, owner_email, str(owner_token)),
+        (title.strip(), description.strip(), owner_email.strip(), str(owner_token)),
     )
     conn.commit()
     conn.close()
 
     msg = EmailMessage()
-    msg["From"] = "noreply@kryptori.lu1.sh"
+    msg["From"] = os.environ.get("EMAIL")
     msg["To"] = owner_email
     msg["Subject"] = f"New ad created: {title}"
     msg.set_content(
@@ -70,11 +71,12 @@ def create_advertisement(
         )
     )
 
-    # Send the message via our own SMTP server.
-    s = smtplib.SMTP("localhost", 25)
+    # TODO: send via own email server
+    s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
     s.starttls()
     s.ehlo()
+    s.login(os.environ.get("EMAIL", ""), os.environ.get("PASSWORD", ""))
     s.send_message(msg)
     s.quit()
 
@@ -180,6 +182,9 @@ async def index():
 async def send_message(
     ad_id: int = Form(...), user_email: str = Form(...), message: str = Form(...)
 ):
+    if user_email == "" or message == "":
+        raise HTTPException(status_code=400, detail="Play nice!")
+
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
@@ -195,33 +200,34 @@ async def send_message(
     conn.commit()
     conn.close()
 
-    s = smtplib.SMTP("localhost", 25)
+    # TODO: use own mail server
+    s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
     s.starttls()
     s.ehlo()
 
     msg_to_owner = EmailMessage()
-    msg_to_owner["From"] = "noreply@kryptori.lu1.sh"
+    msg_to_owner["From"] = os.environ.get("EMAIL")
     msg_to_owner["To"] = owner_email
-    msg_to_owner["Reply To"] = user_email
     msg_to_owner["Subject"] = f"New message about your ad: {title}"
     msg_to_owner.set_content(
         (
             f"Here's a message from an interested party about your ad {title}!\n"
-            f"Message:\n{message}\n"
-            f"User email: {user_email}\n"
+            f"Message:\n{message.strip()}\n"
+            f"User email: {user_email.strip()}\n"
             "Please reply to their email address."
         )
     )
+    s.login(os.environ.get("EMAIL", ""), os.environ.get("PASSWORD", ""))
     s.send_message(msg_to_owner)
 
     confirmation_msg_to_user = EmailMessage()
-    confirmation_msg_to_user["From"] = "noreply@kryptori.lu1.sh"
-    confirmation_msg_to_user["To"] = user_email 
+    confirmation_msg_to_user["From"] = os.environ.get("EMAIL")
+    confirmation_msg_to_user["To"] = user_email.strip()
     confirmation_msg_to_user["Subject"] = "Confirmation: you sent a msg about an ad"
     confirmation_msg_to_user.set_content(
         f"You just sent a message in reply to this ad: {title}\n"
-        f"Your message was: {message}\n\n"
+        f"Your message was: {message.strip()}\n\n"
         "Now you will wait for the ad poster to reply to you via email.\n"
         "Thanks for using kryptori!"
     )
@@ -237,6 +243,9 @@ async def create_ad(
     description: str = Form(...),
     owner_email: str = Form(...),
 ):
+    if title == "" or description == "" or owner_email == "":
+        raise HTTPException(status_code=400, detail="Play nice!")
+
     create_advertisement(
         title,
         description,
@@ -252,6 +261,9 @@ async def update_ad(
     description: str = Form(...),
     token: str = Form(...),
 ):
+    if title == "" or description == "":
+        raise HTTPException(status_code=400, detail="Play nice!")
+
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
