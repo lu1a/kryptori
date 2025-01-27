@@ -39,6 +39,9 @@ def create_advertisement(
     description: str,
     owner_email: str,
 ):
+    title = title.strip()[0:1000]
+    description = description.strip()[0:1000]
+    owner_email = owner_email.strip()[0:1000]
     owner_token = uuid.uuid4()
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -50,24 +53,24 @@ def create_advertisement(
 
     cursor.execute(
         insert_sql,
-        (title.strip()[0:1000], description.strip()[0:1000], owner_email.strip()[0:1000], str(owner_token)),
+        (title, description, owner_email, str(owner_token)),
     )
     conn.commit()
     conn.close()
 
     msg = EmailMessage()
     msg["From"] = os.environ.get("EMAIL")
-    msg["To"] = owner_email.strip()[0:1000]
+    msg["To"] = owner_email
     msg["Subject"] = f"New ad created: {title}"
     msg.set_content(
         (
             f"Thanks for making a new ad!\n"
             f"Title: {title}\n"
             f"Description: {description}\n"
-            "Before it goes live, you must go activate the ad by loading the\n"
-            "webpage: kryptori.lu1.sh/manage-ad?token={YOUR_TOKEN_ID}\n\n "
+            "Before it goes live, you must go activate the ad by loading the webpage:\n"
+            f"kryptori.lu1.sh/manage-ad?token={owner_token}\n\n "
             f"The token for this ad is: {owner_token}\n"
-            "and that's where you can update and delete it."
+            "and that's what you can use to update and delete the ad."
         )
     )
 
