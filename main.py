@@ -280,7 +280,7 @@ async def update_ad(
         SET title = ?, description = ?, updated_at = CURRENT_TIMESTAMP
         WHERE owner_token = ?
     """,
-        (title, description, token),
+    (title.strip()[0:1000], description.strip()[0:1000], token),
     )
 
     conn.commit()
