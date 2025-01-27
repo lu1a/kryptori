@@ -50,14 +50,14 @@ def create_advertisement(
 
     cursor.execute(
         insert_sql,
-        (title.strip(), description.strip(), owner_email.strip(), str(owner_token)),
+        (title.strip()[0:1000], description.strip()[0:1000], owner_email.strip()[0:1000], str(owner_token)),
     )
     conn.commit()
     conn.close()
 
     msg = EmailMessage()
     msg["From"] = os.environ.get("EMAIL")
-    msg["To"] = owner_email
+    msg["To"] = owner_email.strip()[0:1000]
     msg["Subject"] = f"New ad created: {title}"
     msg.set_content(
         (
@@ -213,8 +213,8 @@ async def send_message(
     msg_to_owner.set_content(
         (
             f"Here's a message from an interested party about your ad {title}!\n"
-            f"Message:\n{message.strip()}\n"
-            f"User email: {user_email.strip()}\n"
+            f"Message:\n{message.strip()[0:1000]}\n"
+            f"User email: {user_email.strip()[0:1000]}\n"
             "Please reply to their email address."
         )
     )
@@ -223,11 +223,11 @@ async def send_message(
 
     confirmation_msg_to_user = EmailMessage()
     confirmation_msg_to_user["From"] = os.environ.get("EMAIL")
-    confirmation_msg_to_user["To"] = user_email.strip()
+    confirmation_msg_to_user["To"] = user_email.strip()[0:1000]
     confirmation_msg_to_user["Subject"] = "Confirmation: you sent a msg about an ad"
     confirmation_msg_to_user.set_content(
         f"You just sent a message in reply to this ad: {title}\n"
-        f"Your message was: {message.strip()}\n\n"
+        f"Your message was: {message.strip()[0:1000]}\n\n"
         "Now you will wait for the ad poster to reply to you via email.\n"
         "Thanks for using kryptori!"
     )
