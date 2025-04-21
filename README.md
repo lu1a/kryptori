@@ -1,3 +1,3 @@
 # Kryptori
 
-This has been ported to [tangled.sh/@lu1.sh/kryptori](https://tangled.sh/@lu1.sh/kryptori).
+This has been ported to [tangled.sh/@lewis.moe/kryptori](https://tangled.sh/@lewis.moe/kryptori).
